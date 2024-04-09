@@ -1,0 +1,62 @@
+{
+    "Users": [
+        {
+            "firstname": "desh",
+            "Middlename": "muk",
+            "Lastname": "kumar",
+            "Address": {
+                "country": "india",
+                "State": "bihar",
+                "City": "darbhanga",
+                "Pin": "847249"
+            },
+            "Payment": [
+                {
+                    "Card_Payment": {
+                        "cardname": "sbi",
+                        "cardnumber": "36172819572",
+                        "cvv": "033",
+                        "expiry": "02/12",
+                        "cardonname": "desh",
+                        "card_type": "visa"
+                    }
+                },
+                {
+                    "Wallet_Payment": {
+                        "money": "2,000"
+                    }
+                }
+            ],
+            "Profile": {
+                "picture": "https://raw.githubusercontent.com/deshdesham/Api/woman/3.jpeg",
+                "hight": "5.5",
+                "color": "fair"
+            },
+            "Qualification": [
+                {
+                    "materic": {
+                        "status": "pass",
+                        "pass_year": "2012",
+                        "school_name": "school name"
+                    },
+                    "intermediate": {
+                        "status": "pass",
+                        "pass_year": "2014",
+                        "subject": [
+                            "physics",
+                            "math",
+                            "chemestry"
+                        ],
+                        "school_name": "high school"
+                    },
+                    "graduate": {
+                        "status": "pass",
+                        "pass_year": "2018",
+                        "stream": "cse",
+                        "school_name": "graduate school"
+                    }
+                }
+            ]
+        }
+    ]
+}

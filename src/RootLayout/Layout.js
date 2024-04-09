@@ -1,19 +1,21 @@
 import React from 'react'
-import { Outlet } from 'react-router';
-import Navlink from "./Navlink"
+import Navlink from './Navlink';
+import { Outlet } from 'react-router-dom';
 import Footer from "./Footer"
+const Layout = () => {
 
-const Root = () => {
+
   return (
     <div>
-
         <Navlink/>
         <main>
+    
             <Outlet/>
         </main>
         <Footer/>
-    </div>
+        
+        </div>
   )
 }
 
-export default Root;
+export default Layout;
