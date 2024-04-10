@@ -4,6 +4,8 @@ import About from "./pages/About"
 import Home from "./pages/Home"
 import Error from './pages/Error';
 import ReactForm from './pages/React_Form'; // Rename React_Form to ReactForm
+import ReactHookForm from './pages/ReactHookForm';
+
 
 
 const router = createBrowserRouter(
@@ -11,7 +13,8 @@ const router = createBrowserRouter(
     <Route path='/' element={<Layout/>} >
       <Route index element={<Home/>} />
       <Route path='/about' element={<About/>} />
-      <Route path='/reactform' element={<ReactForm/>} /> {/* Updated component name */}
+      <Route path='/reactform' element={<ReactForm/>} />
+      <Route path='/reacthookform' element={<ReactHookForm/>} />
       <Route path='*' element={<Error/>} />
     </Route>
   )

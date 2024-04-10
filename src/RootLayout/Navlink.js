@@ -18,6 +18,10 @@ const menuItems = [
   {
     name: 'React_form',
     to: '/reactform',
+  },
+  {
+    name: 'React_Hook_form',
+    to: '/reacthookform',
   }
   
   
