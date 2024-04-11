@@ -1,19 +1,55 @@
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
+import * as yup from "yup"
+import { yupResolver } from "@hookform/resolvers/yup";
+import {Eye,EyeOff,AtSign  } from "lucide-react";
 
+
+
+
+const schema = yup.object({
+
+  username: yup.string().min(3, 'Username must be at least 3 characters').max(20, 'Username must be at most 20 characters').required('Username is required'),
+
+  email:yup.string().email('Invalid email address').matches(/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}$/, 'Invalid email address').required('email is required'),
+
+  password:yup.string().min(6, 'Password must be at least 6 characters').matches(/(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/, "password will be combination of(Aa@123)").required("password is required"),
+
+  Cpassword:yup.string().oneOf([yup.ref('password'), null], 'Passwords must match').required("Please confirm your password"),
+
+  country:yup.string().required("please select country"),
+
+  state:yup.string().required("please select state"),
+
+  city:yup.string().required("please select city"),
+
+  phone:yup.string().matches(/^\+?(91)?[6-9]\d{9}$/, 'Invalid phone number').required("phone number is required"),
+
+  gender:yup.string().required("please select gender"),
+
+  address:yup.string().required("please enter address"),
+
+  skill:yup.array().transform((value, originalValue) => {
+    return originalValue === false ? [] : value;
+  }).min(1, 'At least one skill is required').of(yup.string().required('Please select a skill')).required("please choose skill")
+ 
+});
 
 const ReactHookForm = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    getValues,
-    watch,
-  } = useForm();
+  const { register, handleSubmit, formState: { errors }, getValues, watch} = useForm({
+    resolver: yupResolver(schema),
+  });
 
   const [datas, setDatas] = useState([]);
+  const [showPassword,setShowPassword]=useState(false)
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   
-
+  const togglePasswordVisibility =()=>{
+    setShowPassword(!showPassword)
+  }
+  const toggleCPasswordVisibility =()=>{
+    setShowConfirmPassword(!showConfirmPassword)
+  }
 
 
   useEffect(() => {
@@ -46,18 +82,14 @@ const ReactHookForm = () => {
 
         <div className="form-group">
           <label className="block">Username <span className="text-red-500">*</span></label>
-          <input className="w-[240px] leading-tight h-[40px] focus:outline-none border rounded shadow-sm hover:border-gray-500" type="text" {...register("username", {required: true,maxLength: 20,minLength: 3,
-           })}/>
+          <input className="w-[240px] leading-tight h-[40px] focus:outline-none border rounded shadow-sm hover:border-gray-500" type="text" {...register("username")}/>
          
 
           {/* error username */}
 
         <div>
 
-          {errors.username?.type === "required" && (<span className="text-red-500">Username is required</span>)}
-          {errors.username?.type === "minLength" && (<span className="text-red-500">Username must be at least 3 characters</span>)}
-          {errors.username?.type === "maxLength" && (<span className="text-red-500">Username must be less than 20 characters</span>)}
-
+          <span className="text-red-500 text-sm">{errors.username?.message} </span>
         </div>
         </div>
 
@@ -65,7 +97,10 @@ const ReactHookForm = () => {
         
         <div className="form-group">
           <label className="block">Email <span className="text-red-500">*</span></label>
-          <input className="w-[240px] leading-tight h-[40px] focus:outline-none border rounded shadow-sm hover:border-gray-500" type="text" {...register("email", {required: true,pattern: /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/})}/>
+          <div className=" relative">
+          <input className="w-[240px] leading-tight h-[40px] focus:outline-none border rounded shadow-sm hover:border-gray-500" type="text" {...register("email")}/>
+          <span className=" absolute right-0 inset-y-2 mr-2 text-gray-500">{<AtSign/>}</span>
+          </div>
 
          
 
@@ -73,8 +108,7 @@ const ReactHookForm = () => {
 
           <div>
 
-          {errors.email?.type === "required" && (<span className="text-red-500">email is required</span>)}
-          {errors.email?.type === "pattern" && (<span className="text-red-500">email is invalid</span>)}
+          <span className="text-red-500 text-sm">{errors.email?.message} </span>
         
           </div>
           </div>
@@ -85,16 +119,17 @@ const ReactHookForm = () => {
 
         <div className="form-group">
           <label className="block">Password <span className="text-red-500">*</span></label>
-          <input className="w-[240px] leading-tight h-[40px] focus:outline-none border rounded shadow-sm hover:border-gray-500" type="password" {...register("password", {required: true,pattern:
-                /(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/,})}/>
+          <div className=" relative">
+          <input className="w-[240px] leading-tight h-[40px] focus:outline-none border rounded shadow-sm hover:border-gray-500" type={showPassword ? "text" :"password"} {...register("password")}/>
+          <span className="text-gray-500 absolute inset-y-2 right-0 flex items-center px-2.5 cursor-pointer" onClick={togglePasswordVisibility} > {showPassword ? <Eye/> : <EyeOff />}</span>
+          </div>
        
 
           {/* error Password */}
 
           <div>
 
-          {errors.password?.type === "required" && (<span className="text-red-500">password is required</span>)}
-          {errors.password?.type === "pattern" && (<span className="text-red-500">password should be 8 charcter with special</span>)}
+          <span className="text-red-500 text-sm">{errors.password?.message} </span>
 
           </div>
           </div>
@@ -105,18 +140,17 @@ const ReactHookForm = () => {
 
            <div className="form-group">
           <label className="block">Conform Password <span className="text-red-500">*</span></label>
-          <input className="w-[240px] leading-tight h-[40px] focus:outline-none border rounded shadow-sm hover:border-gray-500" type="password" {...register("Cpassword", {required: true,validate: (val) => {
-            const { password } = getValues();
-            return password === val;},
-             })}/>
+          <div className=" relative">
+          <input className="w-[240px] leading-tight h-[40px] focus:outline-none border rounded shadow-sm hover:border-gray-500" type={showConfirmPassword ? "text" :"password"} {...register("Cpassword")}/>
+          <span className="text-gray-500 absolute inset-y-2 right-0 flex items-center px-2.5 cursor-pointer" onClick={toggleCPasswordVisibility} > {showConfirmPassword ? <Eye/> : <EyeOff />}</span>
+          </div>
          
 
           {/* error confirm password */}
 
           <div>
 
-          {errors.Cpassword?.type === "required" && (<span className="text-red-500">conform password is required</span>)}
-          {errors.Cpassword?.type === "validate" && (<span className="text-red-500">Passwords should match!</span>)}
+          <span className="text-red-500 text-sm">{errors.Cpassword?.message} </span>
           
           </div>
           </div>
@@ -127,7 +161,7 @@ const ReactHookForm = () => {
          <label className="block">Country <span className="text-red-500">*</span></label>
          <select
            className="appearance-none w-[240px] leading-tight h-[40px] border rounded shadow-sm hover:border-gray-500"
-           {...register("country", { required: true })}
+           {...register("country")}
         >
             <option value="" className="flex justify-center items-center">
               Select Country
@@ -144,7 +178,8 @@ const ReactHookForm = () => {
        {/* error Country */}
 
        <div>
-       {errors.country?.type === "required" && (<span className="text-red-500">please select country</span>)}
+       <span className="text-red-500 text-sm">{errors.country?.message} </span>
+       
        </div>
        </div>
 
@@ -154,7 +189,7 @@ const ReactHookForm = () => {
            <label className="block">State <span className="text-red-500">*</span></label>
            <select
              className="appearance-none w-[240px] leading-tight h-[40px] border rounded shadow-sm hover:border-gray-500"
-             {...register("state", { required: true })}
+             {...register("state")}
            >
              <option value="" className="">
                Select State
@@ -172,8 +207,7 @@ const ReactHookForm = () => {
            {/* error State */}
 
            <div>
-    
-           {errors.state?.type === "required" && (<span className="text-red-500">please select state</span>)}
+           <span className="text-red-500 text-sm">{errors.state?.message} </span>
 
           </div>
           </div>
@@ -184,7 +218,7 @@ const ReactHookForm = () => {
            <label className="block">City <span className="text-red-500">*</span></label>
            <select
              className="appearance-none w-[240px] leading-tight h-[40px] border rounded shadow-sm hover:border-gray-500"
-             {...register("city", { required: true })}
+             {...register("city")}
            >
              <option value="">Select city</option>
              {watch("country") &&
@@ -202,8 +236,7 @@ const ReactHookForm = () => {
            {/* error City */}
 
            <div>
-    
-         {errors.city?.type === "required" && (<span className="text-red-500">please select city</span>)}
+           <span className="text-red-500 text-sm">{errors.city?.message} </span>
 
         </div>
          </div>
@@ -215,20 +248,14 @@ const ReactHookForm = () => {
            <input
              className="w-[240px] leading-tight h-[40px] focus:outline-none border rounded shadow-sm hover:border-gray-500"
              type="number"
-             {...register("phone", {
-               required: true,
-               minLength: 10,
-               maxLength: 12,
-             })}
+             {...register("phone")}
            />
 
            {/* error phone */}
 
            <div>
 
-           {errors.phone?.type === "required" && (<span className="text-red-500">please enter phone no.</span>)}
-           {errors.phone?.type === "maxLength" && (<span className="text-red-500">invalid no</span>)}
-           {errors.phone?.type === "minLength" && (<span className="text-red-500">invalid no</span>)}
+           <span className="text-red-500 text-sm">{errors.phone?.message} </span>
            
          </div>
          </div>
@@ -239,7 +266,7 @@ const ReactHookForm = () => {
            <label className="block">Gender <span className="text-red-500">*</span></label>
            <select
              className="appearance-none w-[240px] leading-tight h-[40px] border rounded shadow-sm hover:border-gray-500"
-             {...register("gender", { required: true })}
+             {...register("gender")}
            >
              <option value="">Select Gender</option>
              <option value="Male">Male</option>
@@ -251,7 +278,7 @@ const ReactHookForm = () => {
 
            <div>
 
-           {errors.gender?.type === "required" && (<span className="text-red-500">please select gender</span>)}
+           <span className="text-red-500 text-sm">{errors.gender?.message} </span>
            
          </div>
          </div>
@@ -260,13 +287,13 @@ const ReactHookForm = () => {
 
          <div className="form-group">
           <label className="block">Address <span className="text-red-500">*</span></label>
-           <textarea className="input h-[40px] w-[240px] hover:border-gray-500 resize border rounded shadow-sm" {...register("address",{ required: true })} />
+           <textarea className="input h-[40px] w-[240px] hover:border-gray-500 resize border rounded shadow-sm" {...register("address")} />
 
            {/* error address */}
            
            <div>
 
-           {errors.address?.type === "required" && (<span className="text-red-500">please enter address</span>)}
+           <span className="text-red-500 text-sm">{errors.address?.message} </span>
 
           </div>
           </div>
@@ -289,7 +316,8 @@ const ReactHookForm = () => {
            
          
          </div>
-         {errors.skill?.type === "required" && ( <span className="text-red-500">Please select at least one skill</span>)}
+         
+         <span className="text-red-500 text-sm">{errors.skill?.message} </span>
          </div>
 
          
