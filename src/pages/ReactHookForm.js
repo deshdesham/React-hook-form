@@ -36,7 +36,7 @@ const schema = yup.object({
 });
 
 const ReactHookForm = () => {
-  const { register, handleSubmit, formState: { errors }, getValues, watch} = useForm({
+  const { register, handleSubmit, formState: { errors }, watch} = useForm({
     resolver: yupResolver(schema),
   });
 
