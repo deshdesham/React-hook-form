@@ -22,6 +22,10 @@ const menuItems = [
   {
     name: 'React_Hook_form',
     to: '/reacthookform',
+  },
+  {
+    name: 'RhookFWComp',
+    to: '/reacthookformwithcomponent',
   }
   
   
@@ -39,7 +43,7 @@ const menuItems = [
  
  
   return (
-    <div className="relative w-full bg-white">
+    <div className="relative h-[10vh] border w-full bg-white">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-2 sm:px-6 lg:px-8">
         <div className="inline-flex items-center space-x-2">
           <span>
