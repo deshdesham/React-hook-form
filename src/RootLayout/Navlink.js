@@ -30,6 +30,10 @@ const menuItems = [
   {
     name: 'MultiStep',
     to: '/multistep',
+  },
+  {
+    name: 'reacthfws',
+    to: '/reacthfws',
   }
   
   
