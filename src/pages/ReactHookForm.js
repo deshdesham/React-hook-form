@@ -82,7 +82,7 @@ const ReactHookForm = () => {
 
         <div className="form-group">
           <label className="block">Username <span className="text-red-500">*</span></label>
-          <input className="w-[240px] leading-tight h-[40px] focus:outline-none border rounded shadow-sm hover:border-gray-500" type="text" {...register("username")}/>
+          <input className="w-[240px] leading-tight h-[40px] focus:outline-none border rounded shadow-sm hover:border-gray-500 p-2" type="text" {...register("username")}/>
          
 
           {/* error username */}
@@ -97,8 +97,8 @@ const ReactHookForm = () => {
         
         <div className="form-group">
           <label className="block">Email <span className="text-red-500">*</span></label>
-          <div className=" relative">
-          <input className="w-[240px] leading-tight h-[40px] focus:outline-none border rounded shadow-sm hover:border-gray-500" type="text" {...register("email")}/>
+          <div className=" relative w-[240px]">
+          <input className="w-[240px] leading-tight h-[40px] focus:outline-none border rounded shadow-sm hover:border-gray-500 p-2" type="text" {...register("email")}/>
           <span className=" absolute right-0 inset-y-2 mr-2 text-gray-500">{<AtSign/>}</span>
           </div>
 
@@ -119,8 +119,8 @@ const ReactHookForm = () => {
 
         <div className="form-group">
           <label className="block">Password <span className="text-red-500">*</span></label>
-          <div className=" relative">
-          <input className="w-[240px] leading-tight h-[40px] focus:outline-none border rounded shadow-sm hover:border-gray-500" type={showPassword ? "text" :"password"} {...register("password")}/>
+          <div className=" relative w-[240px]">
+          <input className="w-[240px] leading-tight h-[40px] focus:outline-none border rounded shadow-sm hover:border-gray-500 p-2" type={showPassword ? "text" :"password"} {...register("password")}/>
           <span className="text-gray-500 absolute inset-y-2 right-0 flex items-center px-2.5 cursor-pointer" onClick={togglePasswordVisibility} > {showPassword ? <Eye/> : <EyeOff />}</span>
           </div>
        
@@ -140,8 +140,8 @@ const ReactHookForm = () => {
 
            <div className="form-group">
           <label className="block">Conform Password <span className="text-red-500">*</span></label>
-          <div className=" relative">
-          <input className="w-[240px] leading-tight h-[40px] focus:outline-none border rounded shadow-sm hover:border-gray-500" type={showConfirmPassword ? "text" :"password"} {...register("Cpassword")}/>
+          <div className=" relative w-[240px]">
+          <input className="w-[240px] leading-tight h-[40px] focus:outline-none border rounded shadow-sm hover:border-gray-500 p-2" type={showConfirmPassword ? "text" :"password"} {...register("Cpassword")}/>
           <span className="text-gray-500 absolute inset-y-2 right-0 flex items-center px-2.5 cursor-pointer" onClick={toggleCPasswordVisibility} > {showConfirmPassword ? <Eye/> : <EyeOff />}</span>
           </div>
          
@@ -160,14 +160,14 @@ const ReactHookForm = () => {
        <div className="form-group">
          <label className="block">Country <span className="text-red-500">*</span></label>
          <select
-           className="appearance-none w-[240px] leading-tight h-[40px] border rounded shadow-sm hover:border-gray-500"
+           className="appearance-none w-[240px] leading-tight h-[40px] border rounded shadow-sm hover:border-gray-500 p-2 text-gray-500"
            {...register("country")}
         >
             <option value="" className="flex justify-center items-center">
               Select Country
             </option>
            {datas.map((country) => (
-             <option key={country.name} value={country.name}>
+             <option key={country.name} value={country.name} className="p-2">
                {country.name}
              </option>
            ))}
@@ -188,7 +188,7 @@ const ReactHookForm = () => {
        <div className="form-group">
            <label className="block">State <span className="text-red-500">*</span></label>
            <select
-             className="appearance-none w-[240px] leading-tight h-[40px] border rounded shadow-sm hover:border-gray-500"
+             className="appearance-none w-[240px] leading-tight h-[40px] border rounded shadow-sm hover:border-gray-500 p-2 text-gray-500"
              {...register("state")}
            >
              <option value="" className="">
@@ -198,7 +198,7 @@ const ReactHookForm = () => {
                datas
                  .find((country) => country.name === watch("country"))
                  .states.map((state) => (
-                   <option key={state.name} value={state.name}>
+                   <option key={state.name} value={state.name} className="p-2">
                      {state.name}
                    </option>
                  ))}
@@ -217,7 +217,7 @@ const ReactHookForm = () => {
            <div className="form-group">
            <label className="block">City <span className="text-red-500">*</span></label>
            <select
-             className="appearance-none w-[240px] leading-tight h-[40px] border rounded shadow-sm hover:border-gray-500"
+             className="appearance-none w-[240px] leading-tight h-[40px] border rounded shadow-sm hover:border-gray-500 p-2 text-gray-500"
              {...register("city")}
            >
              <option value="">Select city</option>
@@ -227,7 +227,7 @@ const ReactHookForm = () => {
                  .find((country) => country.name === watch("country"))
                  .states.find((state) => state.name === watch("state"))
                  .cities.map((city) => (
-                   <option key={city.name} value={city.name}>
+                   <option key={city.name} value={city.name} className="p-2">
                      {city.name}
                    </option>
                  ))}
@@ -246,7 +246,7 @@ const ReactHookForm = () => {
           <div className="form-group">
            <label className="block">Phone <span className="text-red-500">*</span></label>
            <input
-             className="w-[240px] leading-tight h-[40px] focus:outline-none border rounded shadow-sm hover:border-gray-500"
+             className="w-[240px] leading-tight h-[40px] focus:outline-none border rounded shadow-sm hover:border-gray-500 p-2"
              type="number"
              {...register("phone")}
            />
@@ -265,10 +265,10 @@ const ReactHookForm = () => {
           <div className="form-group">
            <label className="block">Gender <span className="text-red-500">*</span></label>
            <select
-             className="appearance-none w-[240px] leading-tight h-[40px] border rounded shadow-sm hover:border-gray-500"
+             className="appearance-none w-[240px] leading-tight h-[40px] border rounded shadow-sm hover:border-gray-500 p-2 text-gray-500"
              {...register("gender")}
            >
-             <option value="">Select Gender</option>
+             <option value="" className="">Select Gender</option>
              <option value="Male">Male</option>
              <option value="Female">Female</option>
              <option value="Other">Other</option>
@@ -287,7 +287,7 @@ const ReactHookForm = () => {
 
          <div className="form-group">
           <label className="block">Address <span className="text-red-500">*</span></label>
-           <textarea className="input h-[40px] w-[240px] hover:border-gray-500 resize border rounded shadow-sm" {...register("address")} />
+           <textarea className="input h-[40px] w-[240px] hover:border-gray-500 resize border rounded shadow-sm p-2 resize-y" {...register("address")} />
 
            {/* error address */}
            

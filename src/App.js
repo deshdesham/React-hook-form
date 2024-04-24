@@ -6,6 +6,7 @@ import Error from './pages/Error';
 import ReactForm from './pages/React_Form'; // Rename React_Form to ReactForm
 import ReactHookForm from './pages/ReactHookForm';
 import RhookFWComp from './pages/RhookFWComp';
+import MultiStepForm from './pages/MultiStepForm ';
 
 
 
@@ -17,6 +18,7 @@ const router = createBrowserRouter(
       <Route path='/reactform' element={<ReactForm/>} />
       <Route path='/reacthookform' element={<ReactHookForm/>} />
       <Route path='/reacthookformwithcomponent' element={<RhookFWComp/>} />
+      <Route path='/multistep' element={<MultiStepForm/>} />
       <Route path='*' element={<Error/>} />
     </Route>
   )

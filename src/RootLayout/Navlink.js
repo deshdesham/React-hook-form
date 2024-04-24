@@ -26,6 +26,10 @@ const menuItems = [
   {
     name: 'RhookFWComp',
     to: '/reacthookformwithcomponent',
+  },
+  {
+    name: 'MultiStep',
+    to: '/multistep',
   }
   
   
